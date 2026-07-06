@@ -1,595 +1,787 @@
 {
-	"info": {
-		"_postman_id": "c6218d6e-8a7c-47bc-9b62-df21fde1885f",
-		"name": "Fi Lahza API",
-		"description": "Professional API collection for Felahza (Fi Lahza) Multi-Guard Sanctum Authentication (Provider & Driver APIs).",
-		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
-	},
-	"item": [
-		{
-			"name": "Provider",
-			"item": [
-				{
-					"name": "Auth",
-					"item": [
-						{
-							"name": "Register",
-							"request": {
-								"method": "POST",
-								"header": [
-									{
-										"key": "Accept",
-										"value": "application/json",
-										"type": "text"
-									},
-									{
-										"key": "Content-Type",
-										"value": "application/json",
-										"type": "text"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": "{\n    \"full_name\": \"John Provider\",\n    \"business_name\": \"John Logistics LLC\",\n    \"email\": \"john.provider@example.com\",\n    \"phone\": \"+201012345678\",\n    \"password\": \"Password123!\",\n    \"password_confirmation\": \"Password123!\"\n}"
-								},
-								"url": {
-									"raw": "{{base_url}}/provider/register",
-									"host": [
-										"{{base_url}}"
-									],
-									"path": [
-										"provider",
-										"register"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "Login",
-							"event": [
-								{
-									"listen": "test",
-									"script": {
-										"exec": [
-											"var jsonData = pm.response.json();",
-											"if (jsonData.token) {",
-											"    pm.collectionVariables.set(\"provider_token\", jsonData.token);",
-											"    console.log(\"Saved provider_token: \" + jsonData.token);",
-											"}"
-										],
-										"type": "text/javascript"
-									}
-								}
-							],
-							"request": {
-								"method": "POST",
-								"header": [
-									{
-										"key": "Accept",
-										"value": "application/json",
-										"type": "text"
-									},
-									{
-										"key": "Content-Type",
-										"value": "application/json",
-										"type": "text"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": "{\n    \"email\": \"john.provider@example.com\",\n    \"password\": \"Password123!\"\n}"
-								},
-								"url": {
-									"raw": "{{base_url}}/provider/login",
-									"host": [
-										"{{base_url}}"
-									],
-									"path": [
-										"provider",
-										"login"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "Forgot Password",
-							"request": {
-								"method": "POST",
-								"header": [
-									{
-										"key": "Accept",
-										"value": "application/json",
-										"type": "text"
-									},
-									{
-										"key": "Content-Type",
-										"value": "application/json",
-										"type": "text"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": "{\n    \"email\": \"john.provider@example.com\"\n}"
-								},
-								"url": {
-									"raw": "{{base_url}}/provider/forgot-password",
-									"host": [
-										"{{base_url}}"
-									],
-									"path": [
-										"provider",
-										"forgot-password"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "Reset Password",
-							"request": {
-								"method": "POST",
-								"header": [
-									{
-										"key": "Accept",
-										"value": "application/json",
-										"type": "text"
-									},
-									{
-										"key": "Content-Type",
-										"value": "application/json",
-										"type": "text"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": "{\n    \"token\": \"YOUR_RESET_TOKEN_HERE\",\n    \"email\": \"john.provider@example.com\",\n    \"password\": \"NewPassword123!\",\n    \"password_confirmation\": \"NewPassword123!\"\n}"
-								},
-								"url": {
-									"raw": "{{base_url}}/provider/reset-password",
-									"host": [
-										"{{base_url}}"
-									],
-									"path": [
-										"provider",
-										"reset-password"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "Logout",
-							"request": {
-								"auth": {
-									"type": "bearer",
-									"bearer": [
-										{
-											"key": "token",
-											"value": "{{provider_token}}",
-											"type": "string"
-										}
-									]
-								},
-								"method": "POST",
-								"header": [
-									{
-										"key": "Accept",
-										"value": "application/json",
-										"type": "text"
-									}
-								],
-								"url": {
-									"raw": "{{base_url}}/provider/logout",
-									"host": [
-										"{{base_url}}"
-									],
-									"path": [
-										"provider",
-										"logout"
-									]
-								}
-							},
-							"response": []
-						}
-					]
-				},
-				{
-					"name": "Profile",
-					"item": [
-						{
-							"name": "Get Profile",
-							"request": {
-								"auth": {
-									"type": "bearer",
-									"bearer": [
-										{
-											"key": "token",
-											"value": "{{provider_token}}",
-											"type": "string"
-										}
-									]
-								},
-								"method": "GET",
-								"header": [
-									{
-										"key": "Accept",
-										"value": "application/json",
-										"type": "text"
-									}
-								],
-								"url": {
-									"raw": "{{base_url}}/provider/profile",
-									"host": [
-										"{{base_url}}"
-									],
-									"path": [
-										"provider",
-										"profile"
-									]
-								}
-							},
-							"response": []
-						}
-					]
-				},
-				{
-					"name": "Documents",
-					"item": [
-						{
-							"name": "Upload Document",
-							"request": {
-								"auth": {
-									"type": "bearer",
-									"bearer": [
-										{
-											"key": "token",
-											"value": "{{provider_token}}",
-											"type": "string"
-										}
-									]
-								},
-								"method": "POST",
-								"header": [
-									{
-										"key": "Accept",
-										"value": "application/json",
-										"type": "text"
-									}
-								],
-								"body": {
-									"mode": "formdata",
-									"formdata": [
-										{
-											"key": "doc_type",
-											"value": "national_id",
-											"type": "text"
-										},
-										{
-											"key": "file",
-											"type": "file",
-											"src": []
-										}
-									]
-								},
-								"url": {
-									"raw": "{{base_url}}/provider/documents",
-									"host": [
-										"{{base_url}}"
-									],
-									"path": [
-										"provider",
-										"documents"
-									]
-								}
-							},
-							"response": []
-						}
-					]
-				}
-			]
-		},
-		{
-			"name": "Driver",
-			"item": [
-				{
-					"name": "Auth",
-					"item": [
-						{
-							"name": "Register",
-							"request": {
-								"method": "POST",
-								"header": [
-									{
-										"key": "Accept",
-										"value": "application/json",
-										"type": "text"
-									},
-									{
-										"key": "Content-Type",
-										"value": "application/json",
-										"type": "text"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": "{\n    \"full_name\": \"Alex Driver\",\n    \"email\": \"alex.driver@example.com\",\n    \"phone\": \"+201087654321\",\n    \"password\": \"Password123!\",\n    \"password_confirmation\": \"Password123!\"\n}"
-								},
-								"url": {
-									"raw": "{{base_url}}/driver/register",
-									"host": [
-										"{{base_url}}"
-									],
-									"path": [
-										"driver",
-										"register"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "Login",
-							"event": [
-								{
-									"listen": "test",
-									"script": {
-										"exec": [
-											"var jsonData = pm.response.json();",
-											"if (jsonData.token) {",
-											"    pm.collectionVariables.set(\"driver_token\", jsonData.token);",
-											"    console.log(\"Saved driver_token: \" + jsonData.token);",
-											"}"
-										],
-										"type": "text/javascript"
-									}
-								}
-							],
-							"request": {
-								"method": "POST",
-								"header": [
-									{
-										"key": "Accept",
-										"value": "application/json",
-										"type": "text"
-									},
-									{
-										"key": "Content-Type",
-										"value": "application/json",
-										"type": "text"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": "{\n    \"email\": \"alex.driver@example.com\",\n    \"password\": \"Password123!\"\n}"
-								},
-								"url": {
-									"raw": "{{base_url}}/driver/login",
-									"host": [
-										"{{base_url}}"
-									],
-									"path": [
-										"driver",
-										"login"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "Forgot Password",
-							"request": {
-								"method": "POST",
-								"header": [
-									{
-										"key": "Accept",
-										"value": "application/json",
-										"type": "text"
-									},
-									{
-										"key": "Content-Type",
-										"value": "application/json",
-										"type": "text"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": "{\n    \"email\": \"alex.driver@example.com\"\n}"
-								},
-								"url": {
-									"raw": "{{base_url}}/driver/forgot-password",
-									"host": [
-										"{{base_url}}"
-									],
-									"path": [
-										"driver",
-										"forgot-password"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "Reset Password",
-							"request": {
-								"method": "POST",
-								"header": [
-									{
-										"key": "Accept",
-										"value": "application/json",
-										"type": "text"
-									},
-									{
-										"key": "Content-Type",
-										"value": "application/json",
-										"type": "text"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": "{\n    \"token\": \"YOUR_RESET_TOKEN_HERE\",\n    \"email\": \"alex.driver@example.com\",\n    \"password\": \"NewPassword123!\",\n    \"password_confirmation\": \"NewPassword123!\"\n}"
-								},
-								"url": {
-									"raw": "{{base_url}}/driver/reset-password",
-									"host": [
-										"{{base_url}}"
-									],
-									"path": [
-										"driver",
-										"reset-password"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "Logout",
-							"request": {
-								"auth": {
-									"type": "bearer",
-									"bearer": [
-										{
-											"key": "token",
-											"value": "{{driver_token}}",
-											"type": "string"
-										}
-									]
-								},
-								"method": "POST",
-								"header": [
-									{
-										"key": "Accept",
-										"value": "application/json",
-										"type": "text"
-									}
-								],
-								"url": {
-									"raw": "{{base_url}}/driver/logout",
-									"host": [
-										"{{base_url}}"
-									],
-									"path": [
-										"driver",
-										"logout"
-									]
-								}
-							},
-							"response": []
-						}
-					]
-				},
-				{
-					"name": "Profile",
-					"item": [
-						{
-							"name": "Get Profile",
-							"request": {
-								"auth": {
-									"type": "bearer",
-									"bearer": [
-										{
-											"key": "token",
-											"value": "{{driver_token}}",
-											"type": "string"
-										}
-									]
-								},
-								"method": "GET",
-								"header": [
-									{
-										"key": "Accept",
-										"value": "application/json",
-										"type": "text"
-									}
-								],
-								"url": {
-									"raw": "{{base_url}}/driver/profile",
-									"host": [
-										"{{base_url}}"
-									],
-									"path": [
-										"driver",
-										"profile"
-									]
-								}
-							},
-							"response": []
-						}
-					]
-				},
-				{
-					"name": "Documents",
-					"item": [
-						{
-							"name": "Upload Document",
-							"request": {
-								"auth": {
-									"type": "bearer",
-									"bearer": [
-										{
-											"key": "token",
-											"value": "{{driver_token}}",
-											"type": "string"
-										}
-									]
-								},
-								"method": "POST",
-								"header": [
-									{
-										"key": "Accept",
-										"value": "application/json",
-										"type": "text"
-									}
-								],
-								"body": {
-									"mode": "formdata",
-									"formdata": [
-										{
-											"key": "doc_type",
-											"value": "driver_license",
-											"type": "text"
-										},
-										{
-											"key": "file",
-											"type": "file",
-											"src": []
-										}
-									]
-								},
-								"url": {
-									"raw": "{{base_url}}/driver/documents",
-									"host": [
-										"{{base_url}}"
-									],
-									"path": [
-										"driver",
-										"documents"
-									]
-								}
-							},
-							"response": []
-						}
-					]
-				}
-			]
-		}
-	],
-	"variable": [
-		{
-			"key": "base_url",
-			"value": "http://localhost:8000/api/v1",
-			"type": "string"
-		},
-		{
-			"key": "provider_token",
-			"value": "",
-			"type": "string"
-		},
-		{
-			"key": "driver_token",
-			"value": "",
-			"type": "string"
-		}
-	]
+  "openapi": "3.0.3",
+  "info": {
+    "title": "Fi Lahza API",
+    "description": "API Documentation for Felahza (Fi Lahza) Backend. Fully compatible with Apidog. Supports Provider and Driver authentication, profile retrieval, and document upload endpoints.",
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:8000/api/v1",
+      "description": "Local Development Server"
+    }
+  ],
+  "paths": {
+    "/provider/register": {
+      "post": {
+        "tags": ["Provider Auth"],
+        "summary": "Register Provider",
+        "description": "Create a new provider account in the system.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RegisterProviderRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Provider registered successfully.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    },
+                    "provider": {
+                      "$ref": "#/components/schemas/Provider"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation errors."
+          }
+        }
+      }
+    },
+    "/provider/login": {
+      "post": {
+        "tags": ["Provider Auth"],
+        "summary": "Login Provider",
+        "description": "Authenticate provider and get a Sanctum access token.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LoginRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Login successful.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string"
+                    },
+                    "token": {
+                      "type": "string"
+                    },
+                    "provider": {
+                      "$ref": "#/components/schemas/Provider"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Invalid credentials."
+          },
+          "403": {
+            "description": "Deactivated or pending account verification.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string"
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "deactivation_reason": {
+                      "type": "string"
+                    },
+                    "token": {
+                      "type": "string"
+                    },
+                    "provider": {
+                      "$ref": "#/components/schemas/Provider"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/provider/forgot-password": {
+      "post": {
+        "tags": ["Provider Auth"],
+        "summary": "Provider Forgot Password",
+        "description": "Send a password reset link to the provider's email.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["email"],
+                "properties": {
+                  "email": {
+                    "type": "string",
+                    "format": "email"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Password reset email sent."
+          },
+          "422": {
+            "description": "Invalid email."
+          }
+        }
+      }
+    },
+    "/provider/reset-password": {
+      "post": {
+        "tags": ["Provider Auth"],
+        "summary": "Provider Reset Password",
+        "description": "Reset provider password using token received in email.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ResetPasswordRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Password reset successful."
+          },
+          "422": {
+            "description": "Invalid token or passwords match error."
+          }
+        }
+      }
+    },
+    "/provider/logout": {
+      "post": {
+        "tags": ["Provider Auth"],
+        "summary": "Logout Provider",
+        "description": "Revoke active Sanctum token.",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Logged out successfully."
+          },
+          "401": {
+            "description": "Unauthenticated."
+          }
+        }
+      }
+    },
+    "/provider/profile": {
+      "get": {
+        "tags": ["Provider Profile"],
+        "summary": "Get Provider Profile",
+        "description": "Retrieve active authenticated provider profile info.",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Provider profile retrieved.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Provider"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthenticated."
+          }
+        }
+      }
+    },
+    "/provider/documents": {
+      "post": {
+        "tags": ["Provider Profile"],
+        "summary": "Upload Document",
+        "description": "Upload provider document (ID, Tax record, License).",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "#/components/schemas/UploadDocumentRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Document uploaded successfully.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    },
+                    "document": {
+                      "$ref": "#/components/schemas/Document"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation errors."
+          }
+        }
+      }
+    },
+    "/driver/register": {
+      "post": {
+        "tags": ["Driver Auth"],
+        "summary": "Register Driver",
+        "description": "Create a new driver account in the system.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RegisterDriverRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Driver registered successfully.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    },
+                    "driver": {
+                      "$ref": "#/components/schemas/Driver"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation errors."
+          }
+        }
+      }
+    },
+    "/driver/login": {
+      "post": {
+        "tags": ["Driver Auth"],
+        "summary": "Login Driver",
+        "description": "Authenticate driver and get a Sanctum access token.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LoginRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Login successful.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string"
+                    },
+                    "token": {
+                      "type": "string"
+                    },
+                    "driver": {
+                      "$ref": "#/components/schemas/Driver"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Invalid credentials."
+          },
+          "403": {
+            "description": "Deactivated or pending account verification.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string"
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "deactivation_reason": {
+                      "type": "string"
+                    },
+                    "token": {
+                      "type": "string"
+                    },
+                    "driver": {
+                      "$ref": "#/components/schemas/Driver"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/driver/forgot-password": {
+      "post": {
+        "tags": ["Driver Auth"],
+        "summary": "Driver Forgot Password",
+        "description": "Send a password reset link to the driver's email.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["email"],
+                "properties": {
+                  "email": {
+                    "type": "string",
+                    "format": "email"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Password reset email sent."
+          },
+          "422": {
+            "description": "Invalid email."
+          }
+        }
+      }
+    },
+    "/driver/reset-password": {
+      "post": {
+        "tags": ["Driver Auth"],
+        "summary": "Driver Reset Password",
+        "description": "Reset driver password using token received in email.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ResetPasswordRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Password reset successful."
+          },
+          "422": {
+            "description": "Invalid token or passwords match error."
+          }
+        }
+      }
+    },
+    "/driver/logout": {
+      "post": {
+        "tags": ["Driver Auth"],
+        "summary": "Logout Driver",
+        "description": "Revoke active Sanctum token.",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Logged out successfully."
+          },
+          "401": {
+            "description": "Unauthenticated."
+          }
+        }
+      }
+    },
+    "/driver/profile": {
+      "get": {
+        "tags": ["Driver Profile"],
+        "summary": "Get Driver Profile",
+        "description": "Retrieve active authenticated driver profile info.",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Driver profile retrieved.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Driver"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthenticated."
+          }
+        }
+      }
+    },
+    "/driver/documents": {
+      "post": {
+        "tags": ["Driver Profile"],
+        "summary": "Upload Document",
+        "description": "Upload driver document (ID, License).",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "#/components/schemas/UploadDocumentRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Document uploaded successfully.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    },
+                    "document": {
+                      "$ref": "#/components/schemas/Document"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation errors."
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT",
+        "description": "Provide access token received upon successful login."
+      }
+    },
+    "schemas": {
+      "RegisterProviderRequest": {
+        "type": "object",
+        "required": ["full_name", "business_name", "email", "phone", "password", "password_confirmation"],
+        "properties": {
+          "full_name": {
+            "type": "string",
+            "maxLength": 150
+          },
+          "business_name": {
+            "type": "string",
+            "maxLength": 150
+          },
+          "email": {
+            "type": "string",
+            "format": "email",
+            "maxLength": 150
+          },
+          "phone": {
+            "type": "string",
+            "maxLength": 20
+          },
+          "password": {
+            "type": "string",
+            "minLength": 8
+          },
+          "password_confirmation": {
+            "type": "string"
+          }
+        }
+      },
+      "RegisterDriverRequest": {
+        "type": "object",
+        "required": ["full_name", "email", "phone", "password", "password_confirmation"],
+        "properties": {
+          "full_name": {
+            "type": "string",
+            "maxLength": 150
+          },
+          "email": {
+            "type": "string",
+            "format": "email",
+            "maxLength": 150
+          },
+          "phone": {
+            "type": "string",
+            "maxLength": 20
+          },
+          "password": {
+            "type": "string",
+            "minLength": 8
+          },
+          "password_confirmation": {
+            "type": "string"
+          }
+        }
+      },
+      "LoginRequest": {
+        "type": "object",
+        "required": ["password"],
+        "properties": {
+          "email": {
+            "type": "string",
+            "format": "email"
+          },
+          "phone": {
+            "type": "string"
+          },
+          "password": {
+            "type": "string"
+          }
+        }
+      },
+      "ResetPasswordRequest": {
+        "type": "object",
+        "required": ["token", "email", "password", "password_confirmation"],
+        "properties": {
+          "token": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string",
+            "format": "email"
+          },
+          "password": {
+            "type": "string",
+            "minLength": 8
+          },
+          "password_confirmation": {
+            "type": "string"
+          }
+        }
+      },
+      "UploadDocumentRequest": {
+        "type": "object",
+        "required": ["doc_type", "file"],
+        "properties": {
+          "doc_type": {
+            "type": "string",
+            "enum": ["national_id", "tax_card", "commercial_register", "driver_license", "vehicle_registration"]
+          },
+          "file": {
+            "type": "string",
+            "format": "binary"
+          }
+        }
+      },
+      "Provider": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer"
+          },
+          "full_name": {
+            "type": "string"
+          },
+          "business_name": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string"
+          },
+          "phone": {
+            "type": "string"
+          },
+          "business_address": {
+            "type": "string",
+            "nullable": true
+          },
+          "gps_lat": {
+            "type": "number",
+            "nullable": true
+          },
+          "gps_lng": {
+            "type": "number",
+            "nullable": true
+          },
+          "wallet_balance": {
+            "type": "number"
+          },
+          "language": {
+            "type": "string"
+          },
+          "verification_status": {
+            "type": "string",
+            "enum": ["pending", "approved", "rejected"]
+          },
+          "account_status": {
+            "type": "string",
+            "enum": ["active", "deactivated"]
+          },
+          "deactivation_reason": {
+            "type": "string",
+            "nullable": true
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "Driver": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer"
+          },
+          "full_name": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string"
+          },
+          "phone": {
+            "type": "string"
+          },
+          "gps_lat": {
+            "type": "number",
+            "nullable": true
+          },
+          "gps_lng": {
+            "type": "number",
+            "nullable": true
+          },
+          "wallet_balance": {
+            "type": "number"
+          },
+          "status": {
+            "type": "string",
+            "enum": ["online", "offline", "busy"]
+          },
+          "rating": {
+            "type": "number"
+          },
+          "total_trips": {
+            "type": "integer"
+          },
+          "language": {
+            "type": "string"
+          },
+          "verification_status": {
+            "type": "string",
+            "enum": ["pending", "approved", "rejected"]
+          },
+          "account_status": {
+            "type": "string",
+            "enum": ["active", "deactivated"]
+          },
+          "deactivation_reason": {
+            "type": "string",
+            "nullable": true
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "Document": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer"
+          },
+          "user_id": {
+            "type": "integer"
+          },
+          "user_type": {
+            "type": "string"
+          },
+          "doc_type": {
+            "type": "string"
+          },
+          "file_url": {
+            "type": "string"
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      }
+    }
+  }
 }
